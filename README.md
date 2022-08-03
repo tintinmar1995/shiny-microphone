@@ -1,6 +1,6 @@
 # shiny-microphone
 
-Example of an RShiny app that records audio files and save it into server's filesystem 
+A shiny module and functions to records and handle audio from shiny app
 
 ![image](https://user-images.githubusercontent.com/38179709/182409235-91a82d93-6540-4a0e-9320-e5496cee965d.png)
 

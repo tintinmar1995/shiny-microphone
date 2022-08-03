@@ -1,0 +1,37 @@
+require(shiny)
+
+audioRecordServer <- function(id){
+
+  moduleServer(
+    id,
+    function(input, output, session){
+
+      out <- reactive({
+
+        input$data
+        isolate({
+          if (is.null(input$data)){
+            return(NULL)
+          } else {
+            return(list(
+              url=input$url,
+              data=input$data
+            ))
+          }
+        })
+
+      })
+
+      return(out)
+    }
+  )
+}
+
+
+renderAudio <- function(audio_reactive){
+  return(renderUI({
+    if(!is.null(audio_reactive())){
+      tags$audio(src=audio_reactive()$url, controls='')
+    }
+  }))
+}

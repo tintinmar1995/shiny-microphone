@@ -1,4 +1,5 @@
 require(shiny)
+require(RCurl)
 
 audioRecordServer <- function(id){
 
@@ -35,3 +36,11 @@ renderAudio <- function(audio_reactive){
     }
   }))
 }
+
+
+writeMP3 <- function(audio_reactive, path){
+  bin = RCurl::base64Decode(stringr::str_replace(
+    audio_reactive()$data, 'data:audio/mp3;base64,', ''), 'raw')
+  writeBin(bin, path)
+}
+

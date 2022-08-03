@@ -27,6 +27,14 @@ server <- function(input, output) {
 
     output$myAudio <- shinymicrophone::renderAudio(audio)
 
+
+    observe({
+        if(!is.null(audio())){
+            shinymicrophone::writeMP3(audio, 'audio.mp3')
+        }
+    })
+
+
 }
 
 # Run the application

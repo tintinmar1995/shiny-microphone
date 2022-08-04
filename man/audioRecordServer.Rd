@@ -13,7 +13,9 @@ audioRecordServer(id)
 A \code{reactiveValues} with 2 slots :
  \itemize{
   \item \strong{url} : character, mediaURL.
-  \item \strong{data} : character, audio data in base64.
+  \item \strong{type} : character, type (e.g. base64).
+  \item \strong{mime} : character, mime (e.g. audio/mp3).
+  \item \strong{data} : character, audio data (in base64).
  }
 }
 \description{

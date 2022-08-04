@@ -13,10 +13,14 @@ require(RCurl)
 #' @return A \code{reactiveValues} with 2 slots :
 #'  \itemize{
 #'   \item \strong{url} : character, mediaURL.
-#'   \item \strong{data} : character, audio data in base64.
+#'   \item \strong{type} : character, type (e.g. base64).
+#'   \item \strong{mime} : character, mime (e.g. audio/mp3).
+#'   \item \strong{data} : character, audio data (in base64).
 #'  }
 #'
 #' @importFrom shiny reactive isolate
+#' @importFrom stringr str_replace str_split
+#'
 audioRecordServer <- function(id){
 
   moduleServer(
@@ -30,9 +34,19 @@ audioRecordServer <- function(id){
           if (is.null(input$data)){
             return(NULL)
           } else {
+            str = stringr::str_split(input$data, ',')
+            data = str[[1]][2]
+
+            mime_type = stringr::str_replace(str[[1]][1], 'data:', '')
+            str = stringr::str_split(mime_type, ';')
+            mime = str[[1]][1]
+            type = str[[1]][2]
+
             return(list(
               url=input$url,
-              data=input$data
+              type=type,
+              mime=mime,
+              data=data
             ))
           }
         })

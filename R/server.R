@@ -27,11 +27,9 @@ renderAudio <- function(audio_reactive){
 #' @param audio \code{list}. evaluated audioRecordServer returns.
 #' @param path \code{character}. where to save file
 #'
-#' @import RCurl
+#' @importFrom RCurl base64Decode
 #'
 #' @export
 writeMP3 <- function(audio, path){
-  bin = RCurl::base64Decode(stringr::str_replace(
-    audio$data, 'data:audio/mp3;base64,', ''), 'raw')
-  writeBin(bin, path)
+  writeBin(RCurl::base64Decode(audio$data, 'raw'), path)
 }

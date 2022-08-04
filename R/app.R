@@ -8,7 +8,7 @@
 #' @import shiny
 #'
 #' @export
-run_app <- function(host="0.0.0.0", port=3838) {
+runDemo <- function(host="0.0.0.0", port=3838) {
   shiny::shinyAppDir(
     appDir=system.file(file.path("app"), package = "shinymicrophone"),
     options=list(host=host, port=port, launch.browser=TRUE))

@@ -1,34 +1,16 @@
 require(shiny)
 require(RCurl)
 
-audioRecordServer <- function(id){
 
-  moduleServer(
-    id,
-    function(input, output, session){
-
-      out <- reactive({
-
-        input$data
-        isolate({
-          if (is.null(input$data)){
-            return(NULL)
-          } else {
-            return(list(
-              url=input$url,
-              data=input$data
-            ))
-          }
-        })
-
-      })
-
-      return(out)
-    }
-  )
-}
-
-
+#' @title Render an audio player output
+#'
+#' @description Returns a renderUI with audio tags
+#'
+#' @param audio_reactive \code{list}. audioRecordServer returns as reactive.
+#'
+#' @importFrom shiny renderUI tags
+#'
+#' @export
 renderAudio <- function(audio_reactive){
   return(renderUI({
     if(!is.null(audio_reactive())){
@@ -38,6 +20,16 @@ renderAudio <- function(audio_reactive){
 }
 
 
+#' @title Write a MP3 file
+#'
+#' @description Write a MP3 file from the returns of audioRecordServer
+#'
+#' @param audio \code{list}. evaluated audioRecordServer returns.
+#' @param path \code{character}. where to save file
+#'
+#' @import RCurl
+#'
+#' @export
 writeMP3 <- function(audio, path){
   bin = RCurl::base64Decode(stringr::str_replace(
     audio$data, 'data:audio/mp3;base64,', ''), 'raw')
